@@ -1,4 +1,2 @@
 packages: []
 resolver: lts-11.7
-extra-deps:
-- tokstyle-0.0.1
