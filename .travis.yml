@@ -1,5 +1,6 @@
 ---
 language: generic
+os: linux
 
 cache:
   directories:
@@ -14,18 +15,18 @@ script:
   - cp -a bin $HOME/.local/
   # TODO(iphydf): Figure out how to do this more generically. How were we supposed
   # to know that this file is needed and can be found here?
-  - cp $HOME/.stack/snapshots/x86_64-linux/lts-11.7/8.2.2/share/x86_64-linux-ghc-8.2.2/hlint-2.1.3/hlint.yaml $HOME/.local/bin/data/
-  - tar zcf hs-tools-$TRAVIS_TAG.tar.gz -C $HOME
+  - cp $HOME/.stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/hlint-2.2.11/hlint.yaml $HOME/.local/bin/data/
+  - (cd $HOME && tar zcf hs-tools-$TRAVIS_TAG.tar.gz -C $HOME
       .local/bin
-      .stack/snapshots/x86_64-linux/lts-11.7/8.2.2/share/x86_64-linux-ghc-8.2.2/hlint-2.1.3
-      .stack/snapshots/x86_64-linux/lts-11.7/8.2.2/share/x86_64-linux-ghc-8.2.2/pandoc-2.1.2
+      .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/hlint-2.2.11
+      .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/pandoc-2.9.1.1)
 
 deploy:
   provider: releases
-  api_key:
+  token:
     secure: B7li39EsjljhnhwdxoSdtgHl7z44+IzQlO9TZAtcZi3nJiXJB0xwtWr4i03b5OE2ApfJpSDWBZa5eSeNTqa8em/FiqiX7L2J3k/ZvHpupjSs8NRe30Rjb1boiwoN7WBh84MJqxFJOpKWBmJ1Jj38uOlsa4jRG5nMM6OSQBenq+Zp4sji2/HMD3OLeVxjHXjBmTMLWT9F5U7fDX8ZEUDw4Ky/gDzqq9GvL8RUGHyRIrtB/W8osy3jzi6TMrr0ZUGpMz4qgOjCD1HqZgqoSSDxyru0Gvzc7ZysjgnvHp79BLowog6Qqx4Xg56iPUezOMlsykDdYowjw4WeH1pnajrV/0slTFZTrmG1NbA+pJBoDZXzL11dR8ZXquzICDpbNn1Be/dWKH/15av9A9C0tKVWTXMYX38t5+YWIWpnwei0kNy86SdIkS8hPrlpM9X/oKaYx2lTPlAUZ+SameIajlJE8Apb47MxgGK/AZD3B+/6DxF+XeADCCgTx5/LE6OsbTmK87k8CdvsIjWVAo6gN1q/CDvKugFLYm8bccUaqBWsiCIF1IOIk1PTf2i2+rCDFLQDGkq4AoicpcOWGZUUcnDMMS17tEC2tuOZZ0JYwFYxgvGL7QVy3smMpHO273yKtXbh3OMJYYfc/ll7AFuiCOWtqQ0wKvjga1jBg5jonQAm6F0=
   file: hs-tools-$TRAVIS_TAG.tar.gz
-  skip_cleanup: true
   on:
     repo: TokTok/hs-tools
     tags: true
+  edge: true
