@@ -26,7 +26,7 @@ deploy:
   token:
     secure: wpWQHYh3KFfrHdWf3TjPX0E/Y6PDRO+rWaw1T6cBvq0VYktmkY7f6FrIgxoHvYyIiHNHtbRPzBIvNhgEcnv95kjWKWlrlEOKppzRvS0DKxYERMtJIvJaEKx9CXTObErXh0DCdcA9GqmmCUNgu7dHNPUG96oGUAQRy1widxYNcIGM52R/pi2JZIiWbCZBG1YB+Odxt6KmPmKTw3De68GKK450/fApqaQGoBWpgD427YjbM68ZFnPS3zK3AZ9GHg3r0xvXuX9fVZ8JD0y5DBTCKWmlDhQuP7Ib50HM71HgnbDniefLpX2pSc9ic26Ij3hiUzi2zj9Uk28qyu4r5RUJwauJ52pVp/r5Ooc7pnF+JTh4tAMlxXsl841NZW4RB/UoS3zXH69JZ4VWWhoMuJDu7DUqaM8BGeICqGJvaklLk9fMBOiAbYhUxY+PvU9hm4zDy2sTB+o3H1Tumlkc5RsZTxyUTHVxgfczzzwXqesfoR1ivZcXgQy/yAUGqdOyoqNwLxbUJQfFbOw/HYS56rVxYPu5qJXInb8nvNwuKbjteV9pIhxgDdRCznvjLLw5xcMmHg7opDBZ/iNmVTxTVERsYRl6fViI7NGUlSodgzNbpp/mBDeDCU7THJ4mR2UvG4jASiJLD3Gr5Il6K6pB9e6JHLV+ZZ8tVzJcXreaP4wm5dc=
   file: hs-tools-$TRAVIS_TAG.tar.gz
+  skip_cleanup: true
   on:
     repo: TokTok/hs-tools
     tags: true
-  edge: true
