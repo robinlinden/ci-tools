@@ -16,7 +16,7 @@ script:
   # TODO(iphydf): Figure out how to do this more generically. How were we supposed
   # to know that this file is needed and can be found here?
   - cp $HOME/.stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/hlint-2.2.11/hlint.yaml $HOME/.local/bin/data/
-  - (cd $HOME && tar zcf hs-tools-$TRAVIS_TAG.tar.gz -C $HOME
+  - (WORK=`pwd` && cd $HOME && tar zcf $WORK/hs-tools-$TRAVIS_TAG.tar.gz -C $HOME
       .local/bin
       .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/hlint-2.2.11
       .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/pandoc-2.9.1.1)
