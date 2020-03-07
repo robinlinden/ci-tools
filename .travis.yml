@@ -10,7 +10,7 @@ script:
   - mkdir -p ~/.local/bin
   - export PATH=$HOME/.local/bin:$PATH
   - travis_retry curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
-  - stack --no-terminal install hlint pandoc stylish-haskell
+  - stack --no-terminal install hlint pandoc stylish-haskell happy
   - travis_retry curl -L https://github.com/rubik/stack-hpc-coveralls/releases/download/v0.0.4.0/shc-linux-x64-7.10.3.tar.bz2 | tar -xj -C $HOME/.local/bin
   - cp -a bin $HOME/.local/
   # TODO(iphydf): Figure out how to do this more generically. How were we supposed
@@ -18,6 +18,7 @@ script:
   - cp $HOME/.stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/hlint-2.2.11/hlint.yaml $HOME/.local/bin/data/
   - (WORK=`pwd` && cd $HOME && tar zcf $WORK/hs-tools-$TRAVIS_TAG.tar.gz -C $HOME
       .local/bin
+      .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/happy-1.19.12
       .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/hlint-2.2.11
       .stack/snapshots/x86_64-linux/*/8.8.2/share/x86_64-linux-ghc-8.8.2/pandoc-2.9.1.1)
 
