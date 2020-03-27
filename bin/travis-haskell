@@ -21,10 +21,10 @@ travis-script() {
   export LD_LIBRARY_PATH=$HOME/.local/lib
   export PKG_CONFIG_PATH=$HOME/.local/lib/pkgconfig
   
-  NEED_SODIUM=$(stack ls dependencies --test | grep saltine > /dev/null && echo 1)
-  NEED_TOXCORE=$(grep 'extra-libraries:.*toxcore' *.cabal > /dev/null && echo 1)
+  NEED_SODIUM=$(stack ls dependencies --test | grep saltine > /dev/null && echo 1 || echo 0)
+  NEED_TOXCORE=$(grep 'extra-libraries:.*toxcore' *.cabal > /dev/null && echo 1 || echo 0)
   
-  if [ -n "$NEED_SODIUM" ]; then
+  if [ "$NEED_SODIUM" == 1 ]; then
     NEED_TOXCORE=1
   fi
   
@@ -37,7 +37,7 @@ travis-script() {
   fi
   
   # c-toxcore
-  if [ "$NEED_SODIUM" == 1 -a ! -f $HOME/.local/lib/libtoxcore.so ]; then
+  if [ "$NEED_TOXCORE" == 1 -a ! -f $HOME/.local/lib/libtoxcore.so ]; then
     git clone --depth=1 https://github.com/TokTok/c-toxcore
     cd c-toxcore
     cmake -B_build -H. -DCMAKE_INSTALL_PREFIX:PATH=$HOME/.local \
