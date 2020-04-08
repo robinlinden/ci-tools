@@ -6,15 +6,18 @@ set -eu
 PACKAGE=$(echo "$TRAVIS_REPO_SLUG" | sed -e 's|^[^/]*/hs-||')
 
 # Usage: bash <(travis_retry curl -s https://raw.githubusercontent.com/TokTok/hs-tools/master/bin/travis-haskell) download
+#
+# or: travis-download hs-tools
 travis-download() {
   set -x  # Show execution trace.
+  TOOL="${1:-hs-tools}"
 
   # Install the latest CI support tools.
   VERSION=$(curl -L -s -H 'Accept: application/json' \
-    "https://github.com/TokTok/hs-tools/releases/latest" \
+    "https://github.com/TokTok/$TOOL/releases/latest" \
     | egrep -o '"v[0-9][^"]+"' \
     | egrep -o '[^"]+')
-  TOOLS_URL="https://github.com/Toktok/hs-tools/releases/download/$VERSION/hs-tools-$VERSION.tar.gz"
+  TOOLS_URL="https://github.com/Toktok/$TOOL/releases/download/$VERSION/$TOOL-$VERSION.tar.gz"
   travis_retry curl -L -s "$TOOLS_URL" | tar xz -C "$HOME"
 }
 
@@ -24,7 +27,7 @@ travis-download() {
 travis-script() {
   set -x  # Show execution trace.
 
-  travis-download()
+  travis-download
 
   # Where to find libraries.
   export LD_LIBRARY_PATH=$HOME/.local/lib
