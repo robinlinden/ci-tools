@@ -29,10 +29,10 @@ deploy:
   token:
     secure: "W8KCVBdSuKq5p4wpHSMbkC+1R7yDuSK0RR8avlB+eqi3KeXIc/7Rya10vu62mZx86vVvkmwLcL9/gqKqDusoncbo/NVhdiReR8F52IDBl1amCqHcStFL1Wb9vN2hjX5a7X3IPan6i2ABKtuSmF62PwZro7GJhT6krVAjacrEyVMpE2amV3pVhX0RYMSz9Zc4oUNGC85+IsGvjlbH7pZ9Y/UbwRJP/BNAtkJFWrlZYR40iVEJWslhbb9t2ZLJbUwO7uqBMfGBqcA9JwtulKH+UdAoAVgBFUubF+Rf217FEwq1WtlPypXjy5ZHpogIwz2SvE4A41t9uychx9EGMv4R/vLCnElBU6fInEjGnrbGqxk6fEfLIOm7S2gcV1wdXEjkQFKnS6S7EnzI6DCm84mPQjYZ0Jq4nsm9a4yt8E7zMFHBOxoDm0XtQ/b36FY8UnoDXlWhxkctmy4H7Ta1IQQbjqrgkLCnTiouezJ16RoP3oyqW5liWTVB6xmTtOh+WY77nEVIHkT61/aCFytxv5j1r1VHLOvM7bsARrFergItN92UdMbI8uKnNbzZ49xQ2aNnZMn7ZiKKhHhzzQtK8PW8QXpMy1yhNlOmDIrURbOVTesHyp7+rYUVQsymy471wOnpPAjKsyz5ZOWCEo1pd8xEikRv/zwJvj4qkEO0ZHIF71c="
   file: ci-tools-$HOST-$TRAVIS_TAG.tar.gz
-  skip_cleanup: true
   on:
-    repo: TokTok/hs-tools
+    repo: TokTok/ci-tools
     tags: true
+  edge: true
 
 # Only build pull requests and releases, don't build master on pushes,
 # except through api or cron.
