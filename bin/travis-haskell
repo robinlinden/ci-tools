@@ -2,28 +2,41 @@
 
 set -eu
 
+# Usage:
+#   bash <(travis_retry curl -s https://raw.githubusercontent.com/TokTok/ci-tools/master/bin/travis-haskell) <subcommand> [args...]
+# or:
+#   travis-haskell <subcommand> [args...]
+#
+# subcommand:
+#   one of download, script, env, deploy.
+#
+# See below for documentation of each subcommand.
+
 # Determine the Haskell package we're building.
 PACKAGE=$(echo "$TRAVIS_REPO_SLUG" | sed -e 's|^[^/]*/hs-||')
 
-# Usage: bash <(travis_retry curl -s https://raw.githubusercontent.com/TokTok/hs-tools/master/bin/travis-haskell) download
+# Usage: download [slug] [tool] [output-path] [host]
 #
-# or: travis-download hs-tools
+# or: travis-haskell download TokTok/ci-tools ci-tools $HOME x86_64-linux
 travis-download() {
   set -x  # Show execution trace.
-  TOOL="${1:-hs-tools}"
+  SLUG="${1:-TokTok/ci-tools}"  # The user/repo on github.
+  TOOL="${2:-ci-tools}"         # The package name to download from the release.
+  ODIR="${3:-$HOME}"            # The output directory where to extract it.
+  HOST="${4:-x86_64-linux}"     # The host platform to download for.
 
   # Install the latest CI support tools.
   VERSION=$(curl -L -s -H 'Accept: application/json' \
-    "https://github.com/TokTok/$TOOL/releases/latest" \
+    "https://github.com/$SLUG/releases/latest" \
     | egrep -o '"v[0-9][^"]+"' \
     | egrep -o '[^"]+')
-  TOOLS_URL="https://github.com/Toktok/$TOOL/releases/download/$VERSION/$TOOL-$VERSION.tar.gz"
-  travis_retry curl -L -s "$TOOLS_URL" | tar xz -C "$HOME"
+  TOOLS_URL="https://github.com/$SLUG/releases/download/$VERSION/$TOOL-$HOST-$VERSION.tar.gz"
+  curl -L -s "$TOOLS_URL" | tar xz -C "$ODIR"
 }
 
-# Usage: bash <(travis_retry curl -s https://raw.githubusercontent.com/TokTok/hs-tools/master/bin/travis-haskell) script
+# Usage: bash <(travis_retry curl -s https://raw.githubusercontent.com/TokTok/ci-tools/master/bin/travis-haskell) script
 #
-# or, if you ran travis-download before: travis-haskell script
+# or, if you ran `travis-haskell download` before: travis-haskell script
 travis-script() {
   set -x  # Show execution trace.
 
@@ -108,4 +121,6 @@ travis-deploy() {
   stack --no-terminal upload .
 }
 
-travis-$1
+SUBCOMMAND="travis-$1"
+shift
+"$SUBCOMMAND" "$@"

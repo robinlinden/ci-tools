@@ -1,4 +1,4 @@
-# Haskell tool repository
+# Continuous integration tool repository
 
 This repository contains tools for working with the TokTok Haskell
 repositories. Its purpose is mainly to centralise the costly building of
