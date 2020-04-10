@@ -28,8 +28,7 @@ travis-download() {
   # Install the latest CI support tools.
   VERSION=$(curl -L -s -H 'Accept: application/json' \
     "https://github.com/$SLUG/releases/latest" \
-    | egrep -o '"v[0-9][^"]+"' \
-    | egrep -o '[^"]+')
+    | python3 -c 'import sys, json; print(json.loads(sys.stdin.read())["tag_name"])')
   TOOLS_URL="https://github.com/$SLUG/releases/download/$VERSION/$TOOL-$HOST-$VERSION.tar.gz"
   curl -L -s "$TOOLS_URL" | tar xz -C "$ODIR"
 }
