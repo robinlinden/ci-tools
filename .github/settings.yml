@@ -1,11 +1,10 @@
 ---
-_extends: template
+_extends: .github
 
 repository:
   name: ci-tools
   description: Common tools for building TokTok repositories on Travis
   topics: haskell, travis
-  has_issues: true
 
 branches:
   - name: "master"
@@ -14,6 +13,4 @@ branches:
         contexts:
           - Codacy/PR Quality Review
           - Travis CI - Pull Request
-          - WIP
           - code-review/reviewable
-          - license/cla
