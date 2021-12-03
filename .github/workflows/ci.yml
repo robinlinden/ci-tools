@@ -1,0 +1,27 @@
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: do everything
+        run: |
+          export TAG="$(git tag --points-at HEAD)"
+          export HOST=x86_64-linux
+          mkdir -p ~/.local/bin
+          export PATH=$HOME/.local/bin:$PATH
+          curl -L https://get.haskellstack.org/stable/linux-x86_64.tar.gz | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
+          stack --no-terminal install hlint-2.2.11 pandoc-2.9.1.1 stylish-haskell happy-1.19.12
+          curl -L https://github.com/rubik/stack-hpc-coveralls/releases/download/v0.0.4.0/shc-linux-x64-8.0.1.tar.bz2 | tar -xj -C $HOME/.local/bin
+          cp -a bin $HOME/.local/
+          # TODO(iphydf): Figure out how to do this more generically. How were we supposed
+          # to know that this file is needed and can be found here?
+          cp $HOME/.stack/snapshots/$HOST/*/8.8.2/share/$HOST-ghc-8.8.2/hlint-2.2.11/hlint.yaml $HOME/.local/bin/data/
+          (WORK=`pwd` && cd $HOME && tar zcf $WORK/ci-tools-$HOST-$TAG.tar.gz -C $HOME
+              .local/bin
+              .stack/snapshots/$HOST/*/8.8.2/share/$HOST-ghc-8.8.2/happy-1.19.12
+              .stack/snapshots/$HOST/*/8.8.2/share/$HOST-ghc-8.8.2/hlint-2.2.11
+              .stack/snapshots/$HOST/*/8.8.2/share/$HOST-ghc-8.8.2/pandoc-2.9.1.1)
